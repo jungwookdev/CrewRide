@@ -359,7 +359,7 @@ def create_table_employees():
     print(f"[INFO] Successfully generated {num_employees} employees in '{db_name}'.")
 
 # Replace with your actual ORS API key.
-ORS_API_KEY = "5b3ce3597851110001cf6248f06271c7512449da8e07c934e268ed0c"
+ORS_API_KEY = "<ORS_API_KEY>"
 
 def get_ors_route(start_lat, start_lon, end_lat, end_lon, api_key):
     """
