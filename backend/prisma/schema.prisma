@@ -1,0 +1,199 @@
+// This is your Prisma schema file.
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId      String   @id
+  employeeId  String   @unique
+  password    String
+  email       String   @unique
+  phoneNumber String
+  createdAt   DateTime @default(now())
+
+  // One-to-one relation to Employee.
+  employee Employee @relation("UserEmployee", fields: [employeeId], references: [employeeId])
+}
+
+model Employee {
+  employeeId                          String  @id @map("employee_id")
+  name                                String?
+  department                          String?
+  jobRole                             String? @map("job_role")
+  workScheduleType                    String? @map("work_schedule_type")
+  remoteDays                          String? @map("remote_days")
+  languagesSpoken                     String? @map("languages_spoken")
+  emergencyContact                    String? @map("emergency_contact")
+  seniorityLevel                      String? @map("seniority_level")
+  homeLatitude                        Float?  @map("home_latitude")
+  homeLongitude                       Float?  @map("home_longitude")
+  homeAreaName                        String? @map("home_area_name")
+  parkingAvailabilityNearHome         String? @map("parking_availability_near_home")
+  workHoursStart                      String? @map("work_hours_start")
+  workHoursEnd                        String? @map("work_hours_end")
+  daysWorkingInOffice                 String? @map("days_working_in_office")
+  meetingHeavyDays                    String? @map("meeting_heavy_days")
+  carpoolRole                         String? @map("carpool_role")
+  drivingAvailabilityDays             String? @map("driving_availability_days")
+  preferredPickupTimeToGotoWork       String? @map("preferred_pickup_time_to_goto_work")
+  preferredDropoffTimeToGotoWork      String? @map("preferred_dropoff_time_to_goto_work")
+  preferredPickupTimeToLeaveFromWork  String? @map("preferred_pickup_time_to_leave_from_work")
+  preferredDropoffTimeToLeaveFromWork String? @map("preferred_dropoff_time_to_leave_from_work")
+  rideFrequencyPreference             String? @map("ride_frequency_preference")
+  preferredCommunication              String? @map("preferred_communication")
+  musicPreference                     String? @map("music_preference")
+  coRiderGenderPreference             String? @map("co_rider_gender_preference")
+  talkPreferences                     String? @map("talk_preferences")
+  conversationTopics                  String? @map("conversation_topics")
+  allergiesPetPeeves                  String? @map("allergies_pet_peeves")
+  carModel                            String? @map("car_model")
+  carCapacity                         Int?    @map("car_capacity")
+  comfortLevel                        String? @map("comfort_level")
+  fuelType                            String? @map("fuel_type")
+  carpoolInsuranceCoverage            String? @map("carpool_insurance_coverage")
+  averageRating                       Float?  @map("average_rating")
+  punctualityScore                    Float?  @map("punctuality_score")
+  preferredByList                     String? @map("preferred_by_list")
+  notificationPreferences             String? @map("notification_preferences")
+  autoMatchEnabled                    Int?    @map("auto_match_enabled")
+  preferredCarpoolGroupSize           Int?    @map("preferred_carpool_group_size")
+  frequentCoRiders                    String? @map("frequent_co_riders")
+  doNotMatchList                      String? @map("do_not_match_list")
+  cluster                             Int?    @map("cluster")
+
+  // Inverse relation for User
+  user User? @relation("UserEmployee")
+
+  // Back-relations (as defined in other models via Employee)
+  offeredRides     OfferedRide[]      @relation("DriverRides")
+  rideParticipants RideParticipant[]
+  rideFeedbacks    RideFeedback[]
+  notifications    Notification[]
+  sentMessages     Message[]          @relation("SentMessages")
+  receivedMessages Message[]          @relation("ReceivedMessages")
+  rideCancellation RideCancellation[]
+  EmployeeLocation EmployeeLocation[]
+  EmployeeHeadshot EmployeeHeadshot[]
+}
+
+model EmployeeLocation {
+  id         Int      @id @default(autoincrement())
+  employeeId String
+  latitude   Float
+  longitude  Float
+  updatedAt  DateTime @default(now())
+
+  employee Employee @relation(fields: [employeeId], references: [employeeId])
+}
+
+model EmployeeHeadshot {
+  id         Int      @id @default(autoincrement())
+  employeeId String
+  headshot   Bytes // This field stores the raw image data.
+  createdAt  DateTime @default(now())
+
+  employee Employee @relation(fields: [employeeId], references: [employeeId])
+}
+
+model OfferedRide {
+  rideId        String   @id @map("ride_id")
+  driverId      String   @map("driver_id")
+  // Relation to Employee (driver)
+  driver        Employee @relation("DriverRides", fields: [driverId], references: [employeeId])
+  fromLatitude  Float    @map("from_latitude")
+  fromLongitude Float    @map("from_longitude")
+  fromAddress   String   @map("from_address")
+  toLatitude    Float    @map("to_latitude")
+  toLongitude   Float    @map("to_longitude")
+  toAddress     String   @map("to_address")
+  departureTime DateTime @map("departure_time")
+  bufferTime    Int      @map("buffer_time")
+  offeredSeats  Int      @map("offered_seats")
+  completed     Boolean  @map("completed")
+  drivingPath   String?  @map("driving_path")
+
+  // Inverse relations from OfferedRide to other models
+  rideParticipants RideParticipant[]
+  rideFeedbacks    RideFeedback[]
+  rideCancellation RideCancellation[]
+  Message          Message[]
+}
+
+enum RideStatus {
+  OFFERED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model RideParticipant {
+  id              Int               @id @default(autoincrement())
+  ride            OfferedRide       @relation(fields: [rideId], references: [rideId])
+  rideId          String
+  employee        Employee          @relation(fields: [employeeId], references: [employeeId])
+  employeeId      String
+  pickupLatitude  Float
+  pickupLongitude Float
+  pickupAddress   String
+  meetingTime     DateTime
+  status          ParticipantStatus @default(PENDING)
+  createdAt       DateTime          @default(now())
+}
+
+enum ParticipantStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model RideFeedback {
+  id                Int         @id @default(autoincrement())
+  ride              OfferedRide @relation(fields: [rideId], references: [rideId])
+  rideId            String
+  employee          Employee    @relation(fields: [employeeId], references: [employeeId])
+  employeeId        String
+  satisfactionScore Int?
+  punctualityScore  Int?
+  suggestionText    String?
+  createdAt         DateTime    @default(now())
+}
+
+model RideCancellation {
+  id          Int      @id @default(autoincrement())
+  rideId      String // ID of the ride being cancelled
+  employeeId  String // Employee (rider) cancelling the ride
+  cancelledAt DateTime @default(now())
+  reason      String? // Optional reason for cancellation
+
+  // Optionally, you could set up relations if needed:
+  ride     OfferedRide @relation(fields: [rideId], references: [rideId])
+  employee Employee    @relation(fields: [employeeId], references: [employeeId])
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  employee   Employee @relation(fields: [employeeId], references: [employeeId])
+  employeeId String
+  message    String
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model Message {
+  id         Int         @id @default(autoincrement())
+  ride       OfferedRide @relation(fields: [rideId], references: [rideId])
+  rideId     String
+  sender     Employee    @relation("SentMessages", fields: [senderId], references: [employeeId])
+  senderId   String
+  receiver   Employee    @relation("ReceivedMessages", fields: [receiverId], references: [employeeId])
+  receiverId String
+  content    String
+  createdAt  DateTime    @default(now())
+}

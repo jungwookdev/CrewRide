@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="4dp">
+
+    <!-- Rider Headshot -->
+    <ImageView
+        android:id="@+id/iv_rider_headshot"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/headshot"
+        android:src="@drawable/ic_person_placeholder"
+        android:background="@drawable/circle_mask"
+        android:clipToOutline="true" />
+
+    <!-- Rider Name -->
+    <TextView
+        android:id="@+id/tv_rider_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rider\nName"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:textColor="@color/white"
+        android:textSize="11sp" />
+</LinearLayout>

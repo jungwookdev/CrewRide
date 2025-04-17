@@ -1,0 +1,307 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/ll_greeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- User Headshot -->
+        <ImageView
+            android:id="@+id/iv_headshot"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:contentDescription="@string/headshot"
+            android:src="@drawable/ic_person_placeholder"
+            android:background="@drawable/rounded_corners"
+            android:clipToOutline="true" />
+
+        <!-- Welcome Text -->
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Welcome back!"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_greeting" />
+
+    <!-- Search Ride Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_search_ride"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="8dp"
+        android:padding="15dp"
+        android:text="@string/search_ride"
+        android:textAllCaps="false"
+        app:cornerRadius="9dp"
+        app:icon="@drawable/ic_search"
+        app:iconGravity="textStart"
+        app:iconPadding="5dp"
+        app:iconSize="30dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_offer_ride"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_line" />
+
+    <!-- Offer Ride Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_offer_ride"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:padding="15dp"
+        android:text="@string/offer_ride"
+        android:textAllCaps="false"
+        app:cornerRadius="9dp"
+        app:backgroundTint="@color/pastel_teal_darker"
+        app:icon="@drawable/ic_offerride"
+        app:iconGravity="textStart"
+        app:iconPadding="5dp"
+        app:iconSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_search_ride"
+        app:layout_constraintTop_toTopOf="@id/btn_search_ride" />
+
+    <!-- Upcoming Title -->
+    <TextView
+        android:id="@+id/upcoming_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/upcoming_ride"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_search_ride"
+        app:layout_constraintStart_toStartOf="parent" />
+    <!-- Current Ride Card -->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_ride"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="9dp"
+        app:cardElevation="3dp"
+        app:layout_constraintTop_toBottomOf="@id/upcoming_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp">
+
+            <FrameLayout
+                android:id="@+id/map_fragment_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:background="@drawable/rounded_corners"
+                android:clipToOutline="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <FrameLayout
+                    android:id="@+id/map_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_eta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/eta_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="ETA 5 min"
+                android:textColor="@android:color/white"
+                android:textSize="13sp"
+                android:layout_margin="10dp"
+                android:padding="7dp" />
+
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:id="@+id/ll_riders_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:background="@drawable/rounded_background_semitransparent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <!-- Driver Label and Info -->
+                <TextView
+                    android:id="@+id/tv_driver_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="@string/driver_label"
+                    android:textStyle="bold"
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:id="@+id/driver_info_section"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:padding="4dp">
+
+                    <ImageView
+                        android:id="@+id/iv_driver_headshot"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/headshot"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_person_placeholder"
+                        android:background="@drawable/circle_mask"
+                        android:clipToOutline="true" />
+
+
+                    <TextView
+                        android:id="@+id/tv_driver_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Driver Name"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_riders_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/riders_label"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="8dp" />
+
+                <!-- Riders Container (Horizontal Scroll) -->
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp">
+
+                    <LinearLayout
+                        android:id="@+id/layout_riders"
+                        android:layout_width="match_parent"
+                        android:minHeight="100dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp">
+                        <!-- Dynamically add each rider’s headshot and name -->
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+
+            </LinearLayout>
+
+            <!-- Action Buttons Row: Chat and Prep -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/ll_riders_info"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="2dp"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_call_driver"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/call_driver"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_call"
+                    app:iconPadding="1dp"
+                    android:textSize="11sp"
+                    app:iconGravity="textStart"
+                    android:layout_marginEnd="3dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_chat"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chat"
+                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    app:icon="@drawable/ic_chat"
+                    app:iconPadding="1dp"
+                    app:iconGravity="textStart"
+                    android:layout_marginEnd="3dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_prep"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prep"
+                    android:textSize="11sp"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_prep"
+                    app:iconPadding="1dp"
+                    app:iconGravity="textStart" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- No Rides Text (Shown If There's No Upcoming Ride) -->
+    <TextView
+        android:id="@+id/tv_no_rides"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_upcoming_rides"
+        android:background="@drawable/dialog_background"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:gravity="center_horizontal"
+        android:paddingTop="70dp"
+        android:paddingBottom="70dp"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/upcoming_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

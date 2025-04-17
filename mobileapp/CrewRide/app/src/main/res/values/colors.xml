@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soft pastel green theme -->
+    <color name="pastel_green_light">#C6F7C6</color> <!-- lighter shade -->
+    <color name="pastel_green_base">#80EF80</color> <!-- base color -->
+    <color name="pastel_green_dark">#4ACC4A</color> <!-- darker accent -->
+
+    <!-- Accent colors (complementary pastels) -->
+    <color name="pastel_teal">#80EFEF</color>
+    <color name="pastel_purple">#D6A4EF</color>
+    <color name="pastel_teal_darker">#53D5D5</color>
+
+    <!-- Neutrals -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="light_gray">#66a0a0a0</color>
+</resources>

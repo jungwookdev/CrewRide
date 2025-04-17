@@ -1,0 +1,110 @@
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+export async function POST(request) {
+  try {
+    const body = await request.json();
+
+    // Remap snake_case keys to camelCase
+    const {
+      employee_id: employeeId,
+      name,
+      department,
+      job_role: jobRole,
+      work_schedule_type: workScheduleType,
+      remote_days: remoteDays,
+      languages_spoken: languagesSpoken,
+      emergency_contact: emergencyContact,
+      seniority_level: seniorityLevel,
+      home_latitude: homeLatitude,
+      home_longitude: homeLongitude,
+      home_area_name: homeAreaName,
+      parking_availability_near_home: parkingAvailabilityNearHome,
+      work_hours_start: workHoursStart,
+      work_hours_end: workHoursEnd,
+      days_working_in_office: daysWorkingInOffice,
+      meeting_heavy_days: meetingHeavyDays,
+      carpool_role: carpoolRole,
+      driving_availability_days: drivingAvailabilityDays,
+      preferred_pickup_time_to_goto_work: preferredPickupTimeToGotoWork,
+      preferred_dropoff_time_to_goto_work: preferredDropoffTimeToGotoWork,
+      preferred_pickup_time_to_leave_from_work: preferredPickupTimeToLeaveFromWork,
+      preferred_dropoff_time_to_leave_from_work: preferredDropoffTimeToLeaveFromWork,
+      ride_frequency_preference: rideFrequencyPreference,
+      preferred_communication: preferredCommunication,
+      music_preference: musicPreference,
+      co_rider_gender_preference: coRiderGenderPreference,
+      talk_preferences: talkPreferences,
+      conversation_topics: conversationTopics,
+      allergies_pet_peeves: allergiesPetPeeves,
+      car_model: carModel,
+      car_capacity: carCapacity,
+      comfort_level: comfortLevel,
+      fuel_type: fuelType,
+      carpool_insurance_coverage: carpoolInsuranceCoverage,
+      average_rating: averageRating,
+      punctuality_score: punctualityScore,
+      preferred_by_list: preferredByList,
+      notification_preferences: notificationPreferences,
+      auto_match_enabled: autoMatchEnabled,
+      preferred_carpool_group_size: preferredCarpoolGroupSize,
+      frequent_co_riders: frequentCoRiders,
+      do_not_match_list: doNotMatchList,
+      cluster,
+    } = body;
+
+    const employee = await prisma.employee.create({
+      data: {
+        employeeId,
+        name,
+        department,
+        jobRole,
+        workScheduleType,
+        remoteDays,
+        languagesSpoken,
+        emergencyContact,
+        seniorityLevel,
+        homeLatitude,
+        homeLongitude,
+        homeAreaName,
+        parkingAvailabilityNearHome,
+        workHoursStart,
+        workHoursEnd,
+        daysWorkingInOffice,
+        meetingHeavyDays,
+        carpoolRole,
+        drivingAvailabilityDays,
+        preferredPickupTimeToGotoWork,
+        preferredDropoffTimeToGotoWork,
+        preferredPickupTimeToLeaveFromWork,
+        preferredDropoffTimeToLeaveFromWork,
+        rideFrequencyPreference,
+        preferredCommunication,
+        musicPreference,
+        coRiderGenderPreference,
+        talkPreferences,
+        conversationTopics,
+        allergiesPetPeeves,
+        carModel,
+        carCapacity,
+        comfortLevel,
+        fuelType,
+        carpoolInsuranceCoverage,
+        averageRating,
+        punctualityScore,
+        preferredByList,
+        notificationPreferences,
+        autoMatchEnabled,
+        preferredCarpoolGroupSize,
+        frequentCoRiders,
+        doNotMatchList,
+        cluster,
+      },
+    });
+
+    return new Response(JSON.stringify(employee), { status: 200 });
+  } catch (error) {
+    console.error('Error inserting employee:', error);
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  }
+}

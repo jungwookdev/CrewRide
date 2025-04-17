@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">CrewRide</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="search_ride">Search Ride</string>
+    <string name="offer_ride">Offer Ride</string>
+    <string name="upcoming_ride">Upcoming Ride</string>
+    <string name="search_results">Results</string>
+    <string name="headshot">Headshot</string>
+    <string name="call_driver">Call Driver</string>
+    <string name="driver_label">Driver</string>
+    <string name="riders_label">Rider(s)</string>
+    <string name="chat">Chat</string>
+    <string name="prep">Prep</string>
+    <string name="no_upcoming_rides">No Upcoming Rides</string>
+    <string name="title_search">Search</string>
+    <string name="title_rides">Rides</string>
+    <string name="title_messages">Messages</string>
+    <string name="title_back_to_list">&lt; List</string>
+    <string name="title_profile">Profile</string>
+
+
+
+</resources>
